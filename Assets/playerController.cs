@@ -2,34 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.Serialization;
 
-public class playerController : MonoBehaviour
+[RequireComponent(typeof(Rigidbody))]
+public class PlayerController : MonoBehaviour
 {
-    CharacterController playerControl;
-    public float turnSpeed;
-    public float speed;
+    private Rigidbody _rigidbody;
+    
+    [SerializeField] float turnSpeed;
+    [SerializeField] float speed;
 
-    public GameObject leftOar;
-    public GameObject rightOar;
-    public AudioSource rightSound;
-    public AudioSource leftSound;
-    public AudioSource centerStage;
+    private AudioSource _leftSound;
+    private AudioSource _rightSound;
+    private AudioSource _centerStage;
 
-    public AudioClip[] splashes;
-    public AudioClip splash1;
-    public AudioClip splash2;
-    public AudioClip splash3;
-    public AudioClip splash4;
-    public AudioClip splash5;
-    public AudioClip splash6;
+    [SerializeField] AudioClip[] splashes;
+    [SerializeField] AudioClip splash1;
+    [SerializeField] AudioClip splash2;
+    [SerializeField] AudioClip splash3;
+    [SerializeField] AudioClip splash4;
+    [SerializeField] AudioClip splash5;
+    [SerializeField] AudioClip splash6;
 
     void Start()
     {
-        rightSound = rightOar.GetComponent<AudioSource>();
-        leftSound = leftOar.GetComponent<AudioSource>();
-        centerStage = GetComponent<AudioSource>();
+        // find all audiosources in the children of Player
+        AudioSource[] sources = GetComponentsInChildren<AudioSource>();
+        _leftSound = sources[0];
+        _rightSound = sources[1];
+        _centerStage = sources[2];
 
-        playerControl = GetComponent<CharacterController>();
+        _rigidbody = GetComponent<Rigidbody>();
+        
         splashes = new AudioClip[] {
             splash1,
             splash2,
@@ -59,28 +63,34 @@ public class playerController : MonoBehaviour
 
         if ((Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)))
         {
-            if ((!leftSound.isPlaying && !rightSound.isPlaying))
+            if ((!_leftSound.isPlaying && !_rightSound.isPlaying))
             {
-                playerControl.Move(gameObject.transform.rotation * Vector3.forward * speed);
-                leftSound.PlayOneShot(splashes[soundIndexLeft]);
-                rightSound.PlayOneShot(splashes[soundIndexRight]);
+                Debug.Log("Row");
+                
+                Vector3 moveDirection = (gameObject.transform.rotation * Vector3.forward).normalized;
+                
+                _rigidbody.AddForce(moveDirection * speed);
+                _leftSound.PlayOneShot(splashes[soundIndexLeft]);
+                _rightSound.PlayOneShot(splashes[soundIndexRight]);
             }
         }
         else if (Input.GetKey(KeyCode.A))
         {
-            if (!leftSound.isPlaying)
+            if (!_leftSound.isPlaying)
             {
-                gameObject.transform.rotation *= Quaternion.Euler(0, -turnSpeed, 0);
-                leftSound.PlayOneShot(splashes[soundIndexLeft]);
+                gameObject.transform.rotation *= Quaternion.Euler(0, -turnSpeed, 0); 
+                _leftSound.PlayOneShot(splashes[soundIndexLeft]);
             }
         }
         else if (Input.GetKey(KeyCode.D))
         {
-            if (!rightSound.isPlaying)
+            if (!_rightSound.isPlaying)
             {
                 gameObject.transform.rotation *= Quaternion.Euler(0, turnSpeed, 0);
-                rightSound.PlayOneShot(splashes[soundIndexRight]);
+                _rightSound.PlayOneShot(splashes[soundIndexRight]);
             }
         }
+        
     }
+
 }
