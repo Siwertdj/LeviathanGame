@@ -40,16 +40,7 @@ public class PlayerController : MonoBehaviour
             splash3,
             splash4,
             splash5,
-            splash6,
-            /*
-            (AudioClip)Resources.Load("Splashes/Footsteps_Water_Jump_Light_01.wav"),
-            (AudioClip)Resources.Load("Splashes/Footsteps_Water_Jump_Light_02.wav"),
-            (AudioClip)Resources.Load("Splashes/Footsteps_Water_Jump_Light_03.wav"),
-            (AudioClip)Resources.Load("Splashes/Footsteps_Water_Jump_Light_04.wav"),
-            (AudioClip)Resources.Load("Splashes/Footsteps_Water_Jump_Light_05.wav"),
-            (AudioClip)Resources.Load("Splashes/Footsteps_Water_Jump_Light_06.wav"),
-            //(AudioClip)Resources.Load("Other/Growl.wav")
-            */
+            splash6
         };
     }
 

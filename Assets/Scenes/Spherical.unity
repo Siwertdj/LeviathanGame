@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -384,7 +384,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1009,8 +1009,8 @@ Rigidbody:
   m_GameObject: {fileID: 4932932607731927085}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 0.4
+  m_AngularDrag: 6
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -1036,27 +1036,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &4435305977682653246
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4932932607731927085}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62796faf87cf3534d95bc74d7a661ef1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  turnSpeed: 15
-  speed: 300
-  splashes: []
-  splash1: {fileID: 8300000, guid: 2c69408405edc8a4bba4682ce3e54a23, type: 3}
-  splash2: {fileID: 8300000, guid: 219d36a4fa059bf478cffe04b4a352f8, type: 3}
-  splash3: {fileID: 8300000, guid: 8a45756cc67482f429ce8d335a4f9d53, type: 3}
-  splash4: {fileID: 8300000, guid: f41e743747c93cc4eb7fa31bd9322fb1, type: 3}
-  splash5: {fileID: 8300000, guid: 2484e846e16c0ab4e94a36e810efbdae, type: 3}
-  splash6: {fileID: 8300000, guid: 07006c4177cdbcf4c82979c1c67ee6d3, type: 3}
 --- !u!33 &4598886359621517623
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1109,11 +1088,12 @@ GameObject:
   - component: {fileID: 4932932607731927095}
   - component: {fileID: 4932932607731927094}
   - component: {fileID: 4932932607731927089}
-  - component: {fileID: 4435305977682653246}
   - component: {fileID: 3671036981493496263}
   - component: {fileID: 3994647224812311506}
   - component: {fileID: 6930289110526553530}
   - component: {fileID: 6930289110526553531}
+  - component: {fileID: 6930289110526553532}
+  - component: {fileID: 6930289110526553533}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -1353,6 +1333,59 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6930289110526553532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4932932607731927085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b4e5da0ac93e243a2cea71103f4a25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  turnSpeed: 60
+  speed: 70
+  _deadStickRadius: 0
+  splashes: []
+  splash1: {fileID: 8300000, guid: 2c69408405edc8a4bba4682ce3e54a23, type: 3}
+  splash2: {fileID: 8300000, guid: 219d36a4fa059bf478cffe04b4a352f8, type: 3}
+  splash3: {fileID: 8300000, guid: 8a45756cc67482f429ce8d335a4f9d53, type: 3}
+  splash4: {fileID: 8300000, guid: f41e743747c93cc4eb7fa31bd9322fb1, type: 3}
+  splash5: {fileID: 8300000, guid: 2484e846e16c0ab4e94a36e810efbdae, type: 3}
+  splash6: {fileID: 8300000, guid: 07006c4177cdbcf4c82979c1c67ee6d3, type: 3}
+  _splashVolumeFactor: 4
+--- !u!114 &6930289110526553533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4932932607731927085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: f74a296a89348534181a9b4bb686720a, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!65 &7167149991423964794
 BoxCollider:
   m_ObjectHideFlags: 0
