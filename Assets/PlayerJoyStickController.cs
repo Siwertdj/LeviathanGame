@@ -41,6 +41,9 @@ public class PlayerJoyStickController : MonoBehaviour
     [SerializeField] AudioClip splash6;
 
     [SerializeField] float _splashVolumeFactor;
+    
+    [SerializeField] private float attractChance;
+    private MonsterBehaviour monster;
 
     private void Awake()
     {
@@ -70,6 +73,8 @@ public class PlayerJoyStickController : MonoBehaviour
         _centerStage = sources[2];
 
         _rigidbody = GetComponent<Rigidbody>();
+
+        monster = FindObjectOfType<MonsterBehaviour>();
 
         splashes = new AudioClip[] {
             splash1,
@@ -102,6 +107,7 @@ public class PlayerJoyStickController : MonoBehaviour
                 _debounceLeft = true;
                 LeftForce = _keyForce;
                 _leftSound.PlayOneShot(splashes[soundIndexLeft], Mathf.Abs(LeftForce) * _splashVolumeFactor);
+                AttractMonster();
             }
             else if (!Input.GetKey(KeyCode.A))
                 _debounceLeft = false;
@@ -112,7 +118,10 @@ public class PlayerJoyStickController : MonoBehaviour
                 {
                     LeftForce = currentLeft.y - _lastLeftVector.y;
                     if (Mathf.Abs(currentLeft.y) < 0.2)
+                    {
                         _leftSound.PlayOneShot(splashes[soundIndexLeft], Mathf.Abs(LeftForce) * _splashVolumeFactor);
+                        AttractMonster();
+                    }
                 }
             }
         }
@@ -124,6 +133,7 @@ public class PlayerJoyStickController : MonoBehaviour
                 _debounceRight = true;
                 RightForce = _keyForce;
                 _rightSound.PlayOneShot(splashes[soundIndexRight], Mathf.Abs(RightForce) * _splashVolumeFactor);
+                AttractMonster();
             }
             else if (!Input.GetKey(KeyCode.D))
                 _debounceRight = false;
@@ -134,7 +144,10 @@ public class PlayerJoyStickController : MonoBehaviour
                 {
                     RightForce = currentRight.y - _lastRightVector.y;
                     if (Mathf.Abs(currentRight.y) < 0.2)
+                    {
                         _rightSound.PlayOneShot(splashes[soundIndexRight], Mathf.Abs(RightForce) * _splashVolumeFactor);
+                        AttractMonster();
+                    }
                 }
             }
         }
@@ -146,4 +159,18 @@ public class PlayerJoyStickController : MonoBehaviour
         _lastRightVector = currentRight;
     }
 
+    
+    void AttractMonster()
+    {
+        // There is a chance to attract the monster with each splash
+        // TODO: make the sound louder when its a monster-attracting noise
+        float attraction = Random.Range(0, 100);
+
+        if (attraction <= attractChance)
+        {
+            Debug.Log("Monster attracted!!");
+            monster.RotateToSound(gameObject.transform.position);
+        }
+    }
+    
 }

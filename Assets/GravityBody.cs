@@ -15,6 +15,12 @@ public class GravityBody : MonoBehaviour
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
     }
 
+    private void Start()
+    {
+        // All gravitybodies do NOT collide. (prevents getting stuck in "corners")
+        Physics.IgnoreLayerCollision(6,8);
+    }
+
     private void FixedUpdate()
     {
         // pass the gravitybody to the plane to apply gravity

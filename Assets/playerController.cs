@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     
     [SerializeField] float turnSpeed;
     [SerializeField] float speed;
+    [SerializeField] private float attractChance;
 
     private AudioSource _leftSound;
     private AudioSource _rightSound;
@@ -24,6 +25,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip splash5;
     [SerializeField] AudioClip splash6;
 
+    private MonsterBehaviour monster;
+    
     void Start()
     {
         // find all audiosources in the children of Player
@@ -42,6 +45,8 @@ public class PlayerController : MonoBehaviour
             splash5,
             splash6
         };
+
+        monster = FindObjectOfType<MonsterBehaviour>();
     }
 
     // Update is called once per frame
@@ -63,6 +68,8 @@ public class PlayerController : MonoBehaviour
                 _rigidbody.AddForce(moveDirection * speed);
                 _leftSound.PlayOneShot(splashes[soundIndexLeft]);
                 _rightSound.PlayOneShot(splashes[soundIndexRight]);
+                
+                AttractMonster();
             }
         }
         else if (Input.GetKey(KeyCode.A))
@@ -71,6 +78,8 @@ public class PlayerController : MonoBehaviour
             {
                 gameObject.transform.rotation *= Quaternion.Euler(0, -turnSpeed, 0); 
                 _leftSound.PlayOneShot(splashes[soundIndexLeft]);
+                
+                AttractMonster();
             }
         }
         else if (Input.GetKey(KeyCode.D))
@@ -79,9 +88,22 @@ public class PlayerController : MonoBehaviour
             {
                 gameObject.transform.rotation *= Quaternion.Euler(0, turnSpeed, 0);
                 _rightSound.PlayOneShot(splashes[soundIndexRight]);
+                
+                AttractMonster();
             }
         }
         
     }
 
+    void AttractMonster()
+    {
+        // There is a chance to attract the monster with each splash
+        // TODO: make the sound louder when its a monster-attracting noise
+        float attraction = Random.Range(0, 100);
+
+        if (attraction >= attractChance)
+        {
+            monster.RotateToSound(gameObject.transform.position);
+        }
+    }
 }
