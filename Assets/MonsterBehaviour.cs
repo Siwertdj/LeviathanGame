@@ -13,11 +13,17 @@ public class MonsterBehaviour : MonoBehaviour
     [SerializeField] private float movementSpeed;
     [SerializeField] private float moveDelay;
     private float _timer;
+    private bool warned;
     
     private Rigidbody _rigidbody;
-    
-    
-    
+    private CapsuleCollider _capsuleCollider;
+
+    private AudioSource source;
+    [SerializeField] private AudioClip snarl;
+    [SerializeField] private AudioClip idle;
+    [SerializeField] private float _volumeScale;
+
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -27,6 +33,12 @@ public class MonsterBehaviour : MonoBehaviour
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        _capsuleCollider = GetComponent<CapsuleCollider>();
+        source = GetComponent<AudioSource>();
+        Physics.IgnoreCollision(_capsuleCollider, GameObject.FindGameObjectWithTag("Player").GetComponent<CapsuleCollider>());
+        Physics.IgnoreLayerCollision(7, 8);
+        source.Play();
+        source.loop = true;
     }
 
     void FixedUpdate()
@@ -55,8 +67,7 @@ public class MonsterBehaviour : MonoBehaviour
         // perpendicularity to sphere is done by the GravityBody of this gameobject.
         gameObject.transform.LookAt(location);
         // it will rotate towards the sound, then keep moving into that direction, even if it passes that point
-        
-        if(Vector3.Distance(location,gameObject.transform.position) <= attackReach)
+        if (Vector3.Distance(location, gameObject.transform.position) <= attackReach)
         {
             Attack();
         }
@@ -67,9 +78,17 @@ public class MonsterBehaviour : MonoBehaviour
         // TODO: Play monster sound here.
         // TODO: Implement a warning to the player
             // if (warningGiven) { ... lose }
-        
-        // game over
-        FindObjectOfType<GameManager>().GameLose();
+        if (!warned)
+        {
+            warned = true;
+            source.PlayOneShot(snarl, _volumeScale);
+        }
+        else
+        {
+            // game over
+            FindObjectOfType<GameManager>().GameLose();
+        }
+
     }
     
     void FindSpawn()

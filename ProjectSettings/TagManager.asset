@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Planet
+  - Buoy
+  - Monster
   layers:
   - Default
   - TransparentFX

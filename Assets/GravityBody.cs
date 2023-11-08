@@ -18,7 +18,7 @@ public class GravityBody : MonoBehaviour
     private void Start()
     {
         // All gravitybodies do NOT collide. (prevents getting stuck in "corners")
-        Physics.IgnoreLayerCollision(6,8);
+        //Physics.IgnoreLayerCollision(6,8);
     }
 
     private void FixedUpdate()
