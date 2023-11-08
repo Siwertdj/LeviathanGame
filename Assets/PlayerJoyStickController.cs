@@ -12,6 +12,11 @@ public class PlayerJoyStickController : MonoBehaviour
 
     [SerializeField] float turnSpeed;
     [SerializeField] float speed;
+    [SerializeField] float maxSpeed;
+    [Tooltip("The force put on the rowboat when using the keys of a keyboard")]
+    [SerializeField] float _keyForce;
+    private bool _debounceLeft = false;
+    private bool _debounceRight = false;
 
     [Tooltip("How far to the side the sticks must be pushed to register input (0-1)")]
     [SerializeField] float _deadStickRadius;
@@ -90,28 +95,52 @@ public class PlayerJoyStickController : MonoBehaviour
         while (soundIndexLeft == soundIndexRight)
             soundIndexRight = Random.Range(0, 5);
 
-        if (_lastLeftVector.magnitude > _deadStickRadius && currentLeft.magnitude > _deadStickRadius)
+        // Left Input
         {
-            if (currentLeft.x > 0)
+            if (Input.GetKey(KeyCode.A) && !_debounceLeft)
             {
-                LeftForce = currentLeft.y - _lastLeftVector.y;
-                if (Mathf.Abs(currentLeft.y) < 0.2)
-                    _leftSound.PlayOneShot(splashes[soundIndexLeft], Mathf.Abs(LeftForce) * _splashVolumeFactor);
+                _debounceLeft = true;
+                LeftForce = _keyForce;
+                _leftSound.PlayOneShot(splashes[soundIndexLeft], Mathf.Abs(LeftForce) * _splashVolumeFactor);
+            }
+            else if (!Input.GetKey(KeyCode.A))
+                _debounceLeft = false;
+
+            if (_lastLeftVector.magnitude > _deadStickRadius && currentLeft.magnitude > _deadStickRadius)
+            {
+                if (currentLeft.x > 0)
+                {
+                    LeftForce = currentLeft.y - _lastLeftVector.y;
+                    if (Mathf.Abs(currentLeft.y) < 0.2)
+                        _leftSound.PlayOneShot(splashes[soundIndexLeft], Mathf.Abs(LeftForce) * _splashVolumeFactor);
+                }
             }
         }
 
-        if (_lastRightVector.magnitude > _deadStickRadius && currentRight.magnitude > _deadStickRadius)
+        // Right Input
         {
-            if (currentRight.x < 0)
+            if (Input.GetKey(KeyCode.D) && !_debounceRight)
             {
-                RightForce = currentRight.y - _lastRightVector.y;
-                if (Mathf.Abs(currentRight.y) < 0.2)
-                    _rightSound.PlayOneShot(splashes[soundIndexRight], Mathf.Abs(RightForce) * _splashVolumeFactor);
+                _debounceRight = true;
+                RightForce = _keyForce;
+                _rightSound.PlayOneShot(splashes[soundIndexRight], Mathf.Abs(RightForce) * _splashVolumeFactor);
+            }
+            else if (!Input.GetKey(KeyCode.D))
+                _debounceRight = false;
+
+            if (_lastRightVector.magnitude > _deadStickRadius && currentRight.magnitude > _deadStickRadius)
+            {
+                if (currentRight.x < 0)
+                {
+                    RightForce = currentRight.y - _lastRightVector.y;
+                    if (Mathf.Abs(currentRight.y) < 0.2)
+                        _rightSound.PlayOneShot(splashes[soundIndexRight], Mathf.Abs(RightForce) * _splashVolumeFactor);
+                }
             }
         }
 
         _rigidbody.AddTorque(gameObject.transform.rotation * Vector3.up * (LeftForce - RightForce) * turnSpeed, ForceMode.Acceleration);
-        _rigidbody.AddForce(_rigidbody.rotation * Vector3.forward * (LeftForce + RightForce) * speed, ForceMode.Force);
+        _rigidbody.AddForce(_rigidbody.rotation * Vector3.forward * (LeftForce + RightForce) * (_rigidbody.velocity.magnitude > maxSpeed ? 0 : speed), ForceMode.Force);
 
         _lastLeftVector = currentLeft;
         _lastRightVector = currentRight;

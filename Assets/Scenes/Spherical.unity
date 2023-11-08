@@ -1347,6 +1347,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnSpeed: 60
   speed: 70
+  maxSpeed: 9
+  _keyForce: 1
   _deadStickRadius: 0
   splashes: []
   splash1: {fileID: 8300000, guid: 2c69408405edc8a4bba4682ce3e54a23, type: 3}
