@@ -27,8 +27,7 @@ code blocks for commands
 
 ## Authors
 
-Contributors names and contact info
-
+* Siwert de Jong - [GitHub](https://github.com/Siwertdj/). [Itch.io](https://siwertdj.itch.io). [LinkedIn](https://www.linkedin.com/in/siwertdj/).
 * Indy Burer - [Github](https://github.com/IndyBurer/). [LinkedIn](https://www.linkedin.com/in/indy-burer-29b725243?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app)
 * Katelyn van der Heide - [LinkedIn](https://www.linkedin.com/in/katelyn-van-der-heide-baa841240/).
 
@@ -36,11 +35,3 @@ Contributors names and contact info
 
 This project is licensed under the MIT License - see the LICENSE.md file for details
 
-## Acknowledgments
-
-Inspiration, code snippets, etc.
-* [awesome-readme](https://github.com/matiassingers/awesome-readme)
-* [PurpleBooth](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2)
-* [dbader](https://github.com/dbader/readme-template)
-* [zenorocha](https://gist.github.com/zenorocha/4526327)
-* [fvcproductions](https://gist.github.com/fvcproductions/1bfc2d4aecb01a834b46)
