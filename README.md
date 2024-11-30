@@ -10,20 +10,8 @@ Since the game relies on hearing, headphones are strongly recommended. The gamep
 
 Be quiet when the monster draws close, but row towards the safety of the buoy when you have a chance to escape!
 
-## Getting Started
-
-### Installing
-
-* How/where to download your program
-* Any modifications needed to be made to files/folders
-
-### Executing program
-
-* How to run the program
-* Step-by-step bullets
-```
-code blocks for commands
-```
+## How to Play
+Play it [here](https://siwertdj.itch.io/leviathangame) on Itch.io
 
 ## Authors
 
